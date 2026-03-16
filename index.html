@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/auth.js" defer></script>
+    <script src="/js/api.js" defer></script>
+    <title>Tela inicial - Login</title>
+</head>
+
+<body>
+    <main class="auth-container">
+        <section class="auth-box">
+            <h1>Entre na sua conta</h1>
+
+            <form id="login-form" onsubmit="loginEvent(event)">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Entrar</button>
+            </form>
+
+            <p class="auth-links">
+                Não possui uma conta? <a href="/view/register.html">Cadastre-se</a>
+            </p>
+        </section>
+    </main>
+</body>
+
+</html>
