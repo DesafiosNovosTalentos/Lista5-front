@@ -21,8 +21,10 @@ async function loadOrders() {
             headers: getAuthHeaders(),
         });
 
-        const orders = await response.json();
-        renderOrders(orders);
+        const result = await response.json();
+
+        renderOrders(result.data);
+
     } catch (error) {
         console.error('Erro ao carregar pedidos:', error);
         alert('Falha ao carregar pedidos.');
@@ -75,7 +77,7 @@ async function loadMyNotifications() {
     const userId = localStorage.getItem('logged_user_id');
 
     try {
-        const response = await fetch(`http://localhost:8000/api/users/${userId}/notifications`, {
+        const response = await fetch(`http://localhost:8000/api/notifications/${userId}`, {
             method: 'GET',
             headers: getAuthHeaders(),
         });
