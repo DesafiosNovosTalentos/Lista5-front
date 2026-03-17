@@ -28,6 +28,7 @@ function saveSessionAndRedirect(data) {
     localStorage.setItem('auth_token', data.token);
     localStorage.setItem('token_type', data.token_type);
     localStorage.setItem('logged_user_id', data.user.id);
+    localStorage.setItem('role', data.user.role);
     window.location.href = '/view/home.html';
 }
 

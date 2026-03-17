@@ -18,7 +18,6 @@ async function createOrder(event) {
                 amount: amount
             })
         });
-        alert("foi");
         window.location.href = '/view/home.html';
 
     } catch (error) {

@@ -1,15 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina Inicial</title>
+    <title>Home</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/api.js" defer></script>
+    <script src="/js/home.js" defer></script>
 </head>
 
 <body>
-    <h1>Aqui ficará a tela de criação de pedidos, listagem de pedidos e listagem de nao enviados</h1>
+    <header class="page-header">
+        <h1>Pedidos</h1>
+        <nav class="header-actions">
+            <a href="/view/createOrder.html" class="btn btn-primary" id="btn-new-order">Novo Pedido</a>
+            <button onclick="loadMyNotifications()" class="btn btn-secondary" id="btn-notifications">Minhas
+                Notificações</button>
+            <button onclick="logout()" class="btn btn-danger">Sair</button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section id="admin-section" style="display:none;">
+            <h2>Painel Administrativo</h2>
+            <p>Você está logado como administrador.</p>
+        </section>
+
+        <section id="orders-section" style="display:none;">
+            <h2>Meus Pedidos</h2>
+            <div id="orders-list"></div>
+        </section>
+
+        <section id="notifications-section" style="display:none;">
+            <header class="section-header">
+                <h2>Minhas Notificações</h2>
+                <button onclick="closeNotifications()" class="btn btn-secondary">Fechar</button>
+            </header>
+            <div id="notifications-list"></div>
+        </section>
+    </main>
 </body>
-<a href="createOrder.html">Criar Pedido</a>
 
 </html>
