@@ -2,71 +2,46 @@ document.addEventListener('DOMContentLoaded', async () => {
     const session = await validateSession();
     if (!session) return;
 
-    const role = localStorage.getItem('role');
-
-    if (role === 'admin') {
-        window.location.href = '/view/admin.html';
-        return;
-    }
-
-    document.getElementById('orders-section').style.display = 'block';
-    loadOrders();
+    loadUsers();
 });
 
-async function loadOrders() {
+async function loadUsers() {
     try {
-        const result = await apiFetch('/orders');
-        renderOrders(result.data);
+        const users = await apiFetch('/users');
+        renderUsers(users);
     } catch (error) {
-        console.error('Erro ao carregar pedidos:', error);
-        alert('Falha ao carregar pedidos.');
+        console.error('Erro ao carregar usuários:', error);
+        alert('Falha ao carregar usuários.');
     }
 }
 
-function renderOrders(orders) {
-    const container = document.getElementById('orders-list');
+function renderUsers(users) {
+    const container = document.getElementById('users-list');
 
-    if (orders.length === 0) {
-        container.innerHTML = '<p class="empty-state">Nenhum pedido encontrado.</p>';
+    if (users.length === 0) {
+        container.innerHTML = '<p class="empty-state">Nenhum usuário encontrado.</p>';
         return;
     }
 
     container.innerHTML = '';
-    orders.forEach(order => {
+    users.forEach(user => {
         const article = document.createElement('article');
         article.className = 'post-card';
         article.innerHTML = `
-            <h3>${order.product_name}</h3>
-            <p class="post-meta">
-                Quantidade: ${order.amount} · Status: ${order.status} · ${order.created_at ?? '-'}
-            </p>
+            <h3>${user.name}</h3>
+            <p class="post-meta">${user.email} · ${user.role}</p>
             <div class="post-actions">
-                <button onclick="window.location.href='/view/editOrder.html?id=${order.id}'" class="btn btn-secondary">Editar</button>
-                <button onclick="deleteOrder('${order.id}')" class="btn btn-danger">Deletar</button>
+                <button onclick="loadUserNotifications('${user.id}', '${user.name}')" class="btn btn-secondary">Ver Notificações</button>
             </div>
         `;
         container.appendChild(article);
     });
 }
 
-async function deleteOrder(id) {
-    if (!confirm('Tem certeza que deseja deletar este pedido?')) return;
-
-    try {
-        await apiFetch(`/orders/${id}`, { method: 'DELETE' });
-        loadOrders();
-    } catch (error) {
-        console.error('Erro ao deletar pedido:', error);
-        alert('Falha ao deletar pedido.');
-    }
-}
-
-async function loadMyNotifications() {
-    const userId = localStorage.getItem('logged_user_id');
-
+async function loadUserNotifications(userId, userName) {
     try {
         const notifications = await apiFetch(`/notifications/${userId}`);
-        renderNotifications(notifications);
+        renderNotifications(notifications, userName);
         document.getElementById('notifications-section').style.display = 'block';
     } catch (error) {
         console.error('Erro ao carregar notificações:', error);
@@ -74,7 +49,9 @@ async function loadMyNotifications() {
     }
 }
 
-function renderNotifications(notifications) {
+function renderNotifications(notifications, userName) {
+    document.getElementById('notifications-title').textContent = `Notificações de ${userName}`;
+
     const container = document.getElementById('notifications-list');
 
     if (notifications.length === 0) {

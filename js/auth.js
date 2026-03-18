@@ -7,7 +7,7 @@ async function register(name, email, password) {
 
         saveSessionAndRedirect(data);
     } catch (error) {
-        alert(error.message || 'Erro ao registrar, verique seu email!');
+        alert(error.message || 'Erro ao registrar, verifique seu email!');
     }
 }
 

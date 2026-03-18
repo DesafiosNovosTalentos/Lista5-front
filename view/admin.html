@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/api.js" defer></script>
+    <script src="/js/admin.js" defer></script>
+</head>
+
+<body>
+    <header class="page-header">
+        <h1>Painel Administrativo</h1>
+        <button onclick="logout()" class="btn btn-danger">Sair</button>
+    </header>
+
+    <main class="container">
+        <section id="users-section">
+            <h2>Usuários</h2>
+            <div id="users-list"></div>
+        </section>
+
+        <section id="notifications-section" style="display:none;">
+            <header class="section-header">
+                <h2 id="notifications-title">Notificações</h2>
+                <button onclick="closeNotifications()" class="btn btn-secondary">Fechar</button>
+            </header>
+            <div id="notifications-list"></div>
+        </section>
+    </main>
+</body>
+
+</html>

@@ -11,12 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        const response = await fetch(`http://localhost:8000/api/orders/${id}`, {
-            method: 'GET',
-            headers: getAuthHeaders(),
-        });
-
-        const order = await response.json();
+        const order = await apiFetch(`/orders/${id}`);
 
         document.getElementById('order-id').value = order.id;
         document.getElementById('product-name').value = order.product_name;
@@ -38,9 +33,8 @@ async function submitEdit(event) {
     const amount = parseInt(document.getElementById('amount').value, 10);
 
     try {
-        await fetch(`http://localhost:8000/api/orders/${id}`, {
+        await apiFetch(`/orders/${id}`, {
             method: 'PUT',
-            headers: getAuthHeaders(),
             body: JSON.stringify({
                 product_name: productName,
                 amount: amount,
