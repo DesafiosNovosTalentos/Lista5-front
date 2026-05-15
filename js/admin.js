@@ -27,13 +27,26 @@ function renderUsers(users) {
     users.forEach(user => {
         const article = document.createElement('article');
         article.className = 'post-card';
-        article.innerHTML = `
-            <h3>${user.name}</h3>
-            <p class="post-meta">${user.email} · ${user.role}</p>
-            <div class="post-actions">
-                <button onclick="loadUserNotifications('${user.id}', '${user.name}')" class="btn btn-secondary">Ver Notificações</button>
-            </div>
-        `;
+
+        const h3 = document.createElement('h3');
+        h3.textContent = user.name;
+
+        const meta = document.createElement('p');
+        meta.className = 'post-meta';
+        meta.textContent = `${user.email} · ${user.role}`;
+
+        const actions = document.createElement('div');
+        actions.className = 'post-actions';
+
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-secondary';
+        btn.textContent = 'Ver Notificações';
+        btn.addEventListener('click', () => loadUserNotifications(user.id, user.name));
+
+        actions.appendChild(btn);
+        article.appendChild(h3);
+        article.appendChild(meta);
+        article.appendChild(actions);
         container.appendChild(article);
     });
 }
@@ -63,12 +76,16 @@ function renderNotifications(notifications, userName) {
     notifications.forEach(notification => {
         const article = document.createElement('article');
         article.className = 'post-card';
-        article.innerHTML = `
-            <p>${notification.message}</p>
-            <p class="post-meta">
-                Status: ${notification.status} · Tentativas: ${notification.attempts} · ${notification.created_at ?? '-'}
-            </p>
-        `;
+
+        const message = document.createElement('p');
+        message.textContent = notification.message;
+
+        const meta = document.createElement('p');
+        meta.className = 'post-meta';
+        meta.textContent = `Status: ${notification.status} · Tentativas: ${notification.attempts} · ${notification.created_at ?? '-'}`;
+
+        article.appendChild(message);
+        article.appendChild(meta);
         container.appendChild(article);
     });
 }

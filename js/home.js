@@ -35,16 +35,34 @@ function renderOrders(orders) {
     orders.forEach(order => {
         const article = document.createElement('article');
         article.className = 'post-card';
-        article.innerHTML = `
-            <h3>${order.product_name}</h3>
-            <p class="post-meta">
-                Quantidade: ${order.amount} · Status: ${order.status} · ${order.created_at ?? '-'}
-            </p>
-            <div class="post-actions">
-                <button onclick="window.location.href='/view/editOrder.html?id=${order.id}'" class="btn btn-secondary">Editar</button>
-                <button onclick="deleteOrder('${order.id}')" class="btn btn-danger">Deletar</button>
-            </div>
-        `;
+
+        const h3 = document.createElement('h3');
+        h3.textContent = order.product_name;
+
+        const meta = document.createElement('p');
+        meta.className = 'post-meta';
+        meta.textContent = `Quantidade: ${order.amount} · Status: ${order.status} · ${order.created_at ?? '-'}`;
+
+        const actions = document.createElement('div');
+        actions.className = 'post-actions';
+
+        const editBtn = document.createElement('button');
+        editBtn.className = 'btn btn-secondary';
+        editBtn.textContent = 'Editar';
+        editBtn.addEventListener('click', () => {
+            window.location.href = `/view/editOrder.html?id=${order.id}`;
+        });
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'btn btn-danger';
+        deleteBtn.textContent = 'Deletar';
+        deleteBtn.addEventListener('click', () => deleteOrder(order.id));
+
+        actions.appendChild(editBtn);
+        actions.appendChild(deleteBtn);
+        article.appendChild(h3);
+        article.appendChild(meta);
+        article.appendChild(actions);
         container.appendChild(article);
     });
 }
@@ -86,12 +104,16 @@ function renderNotifications(notifications) {
     notifications.forEach(notification => {
         const article = document.createElement('article');
         article.className = 'post-card';
-        article.innerHTML = `
-            <p>${notification.message}</p>
-            <p class="post-meta">
-                Status: ${notification.status} · Tentativas: ${notification.attempts} · ${notification.created_at ?? '-'}
-            </p>
-        `;
+
+        const message = document.createElement('p');
+        message.textContent = notification.message;
+
+        const meta = document.createElement('p');
+        meta.className = 'post-meta';
+        meta.textContent = `Status: ${notification.status} · Tentativas: ${notification.attempts} · ${notification.created_at ?? '-'}`;
+
+        article.appendChild(message);
+        article.appendChild(meta);
         container.appendChild(article);
     });
 }
