@@ -1,0 +1,7 @@
+services:
+  frontend:
+    build: .
+    container_name: lista5-front
+    ports:
+      - "80:80"
+    restart: unless-stopped
