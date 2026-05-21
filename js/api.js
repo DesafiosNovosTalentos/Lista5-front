@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://10.0.0.11";
+const API_BASE_URL = "http://10.0.0.11/api";
 
 function getAuthHeaders() {
     const token = localStorage.getItem('auth_token');
